@@ -9,13 +9,16 @@
           <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('register') }}">Register Number</a>
+          <a class="nav-link" href="{{ url_for('register') }}">Register Account</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Log in</a>
+            <a class="nav-link" href="{{ url_for('addcontact') }}">Add Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Log out</a>
+            <a class="nav-link" href="{{ url_for('login') }}">Log In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
           </li>
       </ul>
     </div>
