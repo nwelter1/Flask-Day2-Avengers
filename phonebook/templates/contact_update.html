@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Change contact information here:</h2>
+    <form action="" method="POST">
+        {{ update_form.hiddentag() }}
+        <div class="form-group">
+        <fieldset>
+            {{ update_form.name.label }}
+            {{ update_form.name(class="form-control", placeholder="Name") }}
+        </fieldset>
+        <fieldset>
+            {{ update_form.email.label }}
+            {{ update_form.email(class="form-control", placeholder="Email") }}
+        </fieldset>
+        <fieldset>
+            {{ update_form.phone_number.label }}
+            {{ update_form.phone_number(class="form-control", placeholder="Phone Number") }}
+        </fieldset>
+        <fieldset>
+            {{ update_form.address.label }}
+            {{ update_form.address(class="form-control", placeholder="Address") }}
+        </fieldset>
+        {{ update_form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

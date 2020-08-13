@@ -1,2 +1,3 @@
-avengers.env
+avengers_env
 __pycache__/
+.env

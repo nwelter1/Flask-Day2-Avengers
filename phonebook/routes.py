@@ -7,9 +7,10 @@ from flask_login import login_required, login_user, current_user, logout_user
 #Home route
 @app.route('/')
 def home():
-    return render_template('home.html')
+    contacts=Info.query.all()
+    return render_template('home.html', contacts=contacts)
 
-#Add route
+#Add route for posting
 @app.route('/addcontact', methods=['GET', 'POST'])
 @login_required
 def addcontact():
@@ -25,6 +26,49 @@ def addcontact():
         db.session.commit()
     return render_template("addcontact.html", form=form)
 
+# retrieve
+@app.route('/contacts/<int:contact_id>')
+@login_required
+def contact_detail(contact_id):
+    contact = Info.query.get_or_404(contact_id)
+    return render_template('contact_detail.html', contact=contact)
+
+# updating
+@app.route('/contacts/update/<int:contact_id>', methods=['GET', 'POST'])
+@login_required
+def contact_update(contact_id):
+    contact = Info.query.get_or_404(contact_id)
+    update_form = AvengerInfoForm()
+
+    if request.method == 'POST' and update_form.validate():
+        name = update_form.name.data
+        email = update_form.email.data
+        phone_number = update_form.phone_number.data
+        address = update_form.address.data
+        user_id = current_user.id
+
+        # update post with form info
+        contact.name = name
+        contact.email = email
+        contact.phone_number = phone_number
+        contact.address = address
+        contact.user_id = user_id
+
+        #Commit change to db
+        db.session.commit()
+        return redirect(url_for('contact_update', contact_id=contact.id))
+    return render_template('contact_update.html', update_form=update_form)
+
+#deleting
+@app.route('/contacts/delete/<int:contact_id>', methods=['POST'])
+def contact_delete(contact_id):
+    contact = Info.query.get_or_404(contact_id)
+    db.session.delete(contact)
+    db.session.commit()
+    return redirect(url_for('home'))
+
+
+#registering
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = AvengerRegisterForm()

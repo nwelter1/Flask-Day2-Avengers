@@ -3,5 +3,23 @@
 <header class="banner">
     <h1 class="header-text">The Avengers Online Phone Book</h1>
 </header>
-<h1>Please navigate to the Register page to register a new phone number</h1>
+<h2>Hello there {{ current_user.username }}</h2>
+
+{% if current_user.is_authenticated %}
+
+{% for contact in contacts %}
+    <div class="container">
+        <h3>
+            <a href="{{ url_for('contact_detail', contact_id = contact.id) }}">{{ contact.name }}</a>
+        </h3>
+        <p>{{ contact.email }}</p>
+        <p>{{ contact.phone_number }}</p>
+        <p>{{ contact.address }}</p>
+    </div>
+{% endfor %}
+
+{% else %}
+<h2>Nothing to show here...</h2>
+
+{% endif %}
 {% endblock content %}
